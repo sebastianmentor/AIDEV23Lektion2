@@ -45,7 +45,10 @@ def register_new_user():
 @app.route("/allusers")
 def all_users():
     q = request.args.get('q','')
+    sort_column = request.args.get('sort_column', 'id')
+    sort_order = request.args.get('sort_order', 'desc')
     users = User.query
+    print(sort_column, sort_order)
 
     users = users.filter(
         User.name.like("%" + q + "%") |
@@ -55,7 +58,28 @@ def all_users():
         User.phone.like("%" + q + "%")
     )
     
-    return render_template('users.html', list_of_users=users, q=q)
+    if sort_column == 'name':
+        sort_by = User.name
+    elif sort_column == 'age':
+        sort_by = User.age
+    elif sort_column == 'username':
+        sort_by = User.username
+    elif sort_column == 'phone':
+        sort_by = User.phone
+    elif sort_column == 'email':
+        sort_by = User.email
+    else:
+        sort_by = User.id
+
+    if sort_order == 'asc':
+        sort_by = sort_by.asc()
+    elif sort_order == 'desc':
+        sort_by = sort_by.desc()
+    
+    
+    users= users.order_by(sort_by)  
+    
+    return render_template('users.html', list_of_users=users, q=q, sort_order=sort_order, sort_column=sort_column)
 
 @app.route("/user/<int:user_id>")
 def user_page(user_id):

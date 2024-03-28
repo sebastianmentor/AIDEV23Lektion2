@@ -22,12 +22,55 @@ All users
    <table class="table table-bordered">
       <thead class="table th">
          <tr>
-            <td>Id</td>
-            <td>Namn</td>
-            <td>Ålder</td>
-            <td>Email</td>
-            <td>Användarnamn</td>
-            <td>Telefonnummer</td>
+            <td>Id
+               <a href="{{url_for('all_users', sort_order='asc', sort_column='id', q = q)}}">
+                  <i class='bx bxs-up-arrow'></i>
+              </a>
+              <a href="{{url_for('all_users', sort_order='desc', sort_column='id', q = q)}}">
+                  <i class='bx bxs-down-arrow'></i>
+              </a>
+            </td>
+            <td>Namn
+
+               <a href="{{url_for('all_users', sort_order='asc', sort_column='name', q = q)}}">
+                  <i class='bx bxs-up-arrow'></i>
+               </a>
+               <a href="{{url_for('all_users',sort_order='desc', sort_column='name', q = q)}}">
+                  <i class='bx bxs-down-arrow'></i>
+               </a>
+            </td>
+            <td>Ålder
+               <a href="{{url_for('all_users',sort_order='asc', sort_column='age', q = q)}}">
+                  <i class='bx bxs-up-arrow'></i>
+              </a>
+              <a href="{{url_for('all_users', sort_order='desc', sort_column='age', q = q)}}">
+                  <i class='bx bxs-down-arrow'></i>
+              </a>
+            </td>
+            <td>Email
+               <a href="{{url_for('all_users', sort_order='asc', sort_column='email', q = q)}}">
+                  <i class='bx bxs-up-arrow'></i>
+              </a>
+              <a href="{{url_for('all_users', sort_order='desc', sort_column='email', q = q)}}">
+                  <i class='bx bxs-down-arrow'></i>
+              </a>
+            </td>
+            <td>Användarnamn
+               <a href="{{url_for('all_users', sort_order='asc', sort_column='username', q = q)}}">
+                  <i class='bx bxs-up-arrow'></i>
+              </a>
+              <a href="{{url_for('all_users', sort_order='desc', sort_column='username', q = q)}}">
+                  <i class='bx bxs-down-arrow'></i>
+              </a>
+            </td>
+            <td>Telefonnummer
+               <a href="{{url_for('all_users', sort_order='asc', sort_column='phone', q = q)}}">
+                  <i class='bx bxs-up-arrow'></i>
+              </a>
+              <a href="{{url_for('all_users', sort_order='desc', sort_column='phone', q = q)}}">
+                  <i class='bx bxs-down-arrow'></i>
+              </a>
+            </td>
          </tr>
       </thead>
 
