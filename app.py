@@ -44,8 +44,18 @@ def register_new_user():
 
 @app.route("/allusers")
 def all_users():
-    users = User.query.all()
-    return render_template('users.html', list_of_users=users)
+    q = request.args.get('q','')
+    users = User.query
+
+    users = users.filter(
+        User.name.like("%" + q + "%") |
+        User.email.like("%" + q + "%") |
+        User.age.like("%" + q + "%") |
+        User.username.like("%" + q + "%") |
+        User.phone.like("%" + q + "%")
+    )
+    
+    return render_template('users.html', list_of_users=users, q=q)
 
 @app.route("/user/<int:user_id>")
 def user_page(user_id):

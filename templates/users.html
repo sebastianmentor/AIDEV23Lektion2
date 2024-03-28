@@ -11,9 +11,36 @@ All users
       {% endfor %}
    {% endif %}
 {% endwith %}
+
 <div class="container">
-    {% for user in list_of_users %}
-      <h5>{{user.id}} {{user.email}}    {{user.age}}      {{user.name}}   {{user.username}}   {{user.phone}}</h5>
-    {% endfor %}
+   <form method="get">
+      <div class="search-box">
+          <input type="text" name="q" placeholder="Search..." required value="{{q}}">
+          <button class="search-button" type="submit">Sök</button>
+      </div>
+  </form>
+   <table class="table table-bordered">
+      <thead class="table th">
+         <tr>
+            <td>Id</td>
+            <td>Namn</td>
+            <td>Ålder</td>
+            <td>Email</td>
+            <td>Användarnamn</td>
+            <td>Telefonnummer</td>
+         </tr>
+      </thead>
+
+      {% for user in list_of_users %}
+      <tr>
+         <td>{{user.id}}</td>
+         <td>{{user.name}}</td>
+         <td>{{user.age}} </td>
+         <td>{{user.email}}</td>
+         <td>{{user.username}}</td>
+         <td>{{user.phone}}</td>
+      </tr>
+      {% endfor %}
+   </table>
 </div>
 {% endblock %}
