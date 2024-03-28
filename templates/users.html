@@ -23,53 +23,56 @@ All users
       <thead class="table th">
          <tr>
             <td>Id
-               <a href="{{url_for('all_users', sort_order='asc', sort_column='id', q = q)}}">
+               <a href="{{url_for('all_users', sort_order='asc', sort_column='id', q = q, page=page)}}">
                   <i class='bx bxs-up-arrow'></i>
               </a>
-              <a href="{{url_for('all_users', sort_order='desc', sort_column='id', q = q)}}">
+              <a href="{{url_for('all_users', sort_order='desc', sort_column='id', q = q, page=page)}}">
                   <i class='bx bxs-down-arrow'></i>
               </a>
             </td>
             <td>Namn
 
-               <a href="{{url_for('all_users', sort_order='asc', sort_column='name', q = q)}}">
+               <a href="{{url_for('all_users', sort_order='asc', sort_column='name', q = q, page=page)}}">
                   <i class='bx bxs-up-arrow'></i>
                </a>
-               <a href="{{url_for('all_users',sort_order='desc', sort_column='name', q = q)}}">
+               <a href="{{url_for('all_users',sort_order='desc', sort_column='name', q = q, page=page)}}">
                   <i class='bx bxs-down-arrow'></i>
                </a>
             </td>
             <td>Ålder
-               <a href="{{url_for('all_users',sort_order='asc', sort_column='age', q = q)}}">
+               <a href="{{url_for('all_users',sort_order='asc', sort_column='age', q = q, page=page)}}">
                   <i class='bx bxs-up-arrow'></i>
               </a>
-              <a href="{{url_for('all_users', sort_order='desc', sort_column='age', q = q)}}">
+              <a href="{{url_for('all_users', sort_order='desc', sort_column='age', q = q, page=page)}}">
                   <i class='bx bxs-down-arrow'></i>
               </a>
             </td>
             <td>Email
-               <a href="{{url_for('all_users', sort_order='asc', sort_column='email', q = q)}}">
+               <a href="{{url_for('all_users', sort_order='asc', sort_column='email', q = q, page=page)}}">
                   <i class='bx bxs-up-arrow'></i>
               </a>
-              <a href="{{url_for('all_users', sort_order='desc', sort_column='email', q = q)}}">
+              <a href="{{url_for('all_users', sort_order='desc', sort_column='email', q = q, page=page)}}">
                   <i class='bx bxs-down-arrow'></i>
               </a>
             </td>
             <td>Användarnamn
-               <a href="{{url_for('all_users', sort_order='asc', sort_column='username', q = q)}}">
+               <a href="{{url_for('all_users', sort_order='asc', sort_column='username', q = q, page=page)}}">
                   <i class='bx bxs-up-arrow'></i>
               </a>
-              <a href="{{url_for('all_users', sort_order='desc', sort_column='username', q = q)}}">
+              <a href="{{url_for('all_users', sort_order='desc', sort_column='username', q = q, page=page)}}">
                   <i class='bx bxs-down-arrow'></i>
               </a>
             </td>
             <td>Telefonnummer
-               <a href="{{url_for('all_users', sort_order='asc', sort_column='phone', q = q)}}">
+               <a href="{{url_for('all_users', sort_order='asc', sort_column='phone', q = q, page=page)}}">
                   <i class='bx bxs-up-arrow'></i>
               </a>
-              <a href="{{url_for('all_users', sort_order='desc', sort_column='phone', q = q)}}">
+              <a href="{{url_for('all_users', sort_order='desc', sort_column='phone', q = q, page=page)}}">
                   <i class='bx bxs-down-arrow'></i>
               </a>
+            </td>
+            <td>
+               Go to
             </td>
          </tr>
       </thead>
@@ -82,8 +85,53 @@ All users
          <td>{{user.email}}</td>
          <td>{{user.username}}</td>
          <td>{{user.phone}}</td>
+         <td><a href="{{url_for('user_page', user_id=user.id)}}"><i class='bx bxs-invader'></i></a></td>
       </tr>
       {% endfor %}
    </table>
+   <nav aria-label="Page navigation example">
+      <ul class="pagination">
+          {% if nr_pages !=1 %}    
+              {% if has_prev %}
+              <li class="page-item">
+                  <a class="page-link" href="{{url_for('all_users', sort_column = sort_column, sort_order = sort_order, q=q, page = page - 1)}}" aria-label="Föregående">
+                      <i class='bx bx-chevrons-left'></i>
+                  </a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                  <a class="page-link"><i class='bx bx-chevrons-left'></i></box-icon></a>
+              </li>
+              {% endif %}
+  
+              {% for page in pagination.iter_pages(left_edge=0, right_edge=0, left_current=2, right_current=2) %}
+                  {% if page %}
+                      {% if page != pagination.page %}
+                      <li class="page-item">
+                          <a class="page-link" href="{{url_for('all_users', sort_column = sort_column, sort_order = sort_order, q=q, page = page)}}">{{ page }}</a>
+                      </li>
+                          
+                      {% else %}
+                      <li class="page-item active">
+                          <a class="page-link"><strong>{{ page }}</strong></a>
+                      </li>
+                      {% endif %}
+                  {% endif %}
+              {% endfor %}
+              {% if has_next %}
+                  <li class="page-item">
+                      <a class="page-link" href="{{url_for('all_users', sort_column = sort_column, sort_order = sort_order, q=q, page = page + 1)}}">
+                          <i class='bx bx-chevrons-right'></i>
+                      </a>
+                  </li>
+              {% else %}
+                  <li class="page-item disabled">
+                      <a class="page-link"><i class='bx bx-chevrons-right'></i></a>
+                  </li>
+              {% endif %}
+          {% endif %}
+      </ul>
+      <p>Page {{page}} out of {{pages}}</p>
+   </nav>
 </div>
 {% endblock %}

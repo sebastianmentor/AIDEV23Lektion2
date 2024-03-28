@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_migrate import Migrate, upgrade
 from models import db, User, seed_data
 from dotenv import load_dotenv
@@ -47,6 +47,7 @@ def all_users():
     q = request.args.get('q','')
     sort_column = request.args.get('sort_column', 'id')
     sort_order = request.args.get('sort_order', 'desc')
+    page = request.args.get('page', 1, type=int)
     users = User.query
     print(sort_column, sort_order)
 
@@ -78,12 +79,35 @@ def all_users():
     
     
     users= users.order_by(sort_by)  
-    
-    return render_template('users.html', list_of_users=users, q=q, sort_order=sort_order, sort_column=sort_column)
+
+    pa_obj = users.paginate(page=page, per_page=10, error_out=True)
+
+    return render_template(
+        'users.html', 
+        list_of_users=pa_obj.items, 
+        q=q, 
+        sort_order=sort_order, 
+        sort_column=sort_column,
+        pagination = pa_obj,
+        page=page,
+        nr_pages=pa_obj.pages,
+        has_next = pa_obj.has_next,
+        has_prev = pa_obj.has_prev
+        )
 
 @app.route("/user/<int:user_id>")
 def user_page(user_id):
-    ...
+    user = User.query.filter_by(id=user_id).first()
+    return render_template('user_page.html', user = user)
+
+@app.route("/user/goto", methods=["GET", "POST"])
+def goto_user():
+    if request.method == "POST":
+        user_id = request.form.get('user_id',type=int)
+        return redirect(url_for('user_page', user_id=user_id))
+    return render_template('goto.html')
+
+
 
 if __name__ == "__main__":
     with app.app_context():

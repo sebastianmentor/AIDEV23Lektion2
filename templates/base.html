@@ -11,7 +11,8 @@
         <div class="nav-bar">
             <a href="/">Home</a>
             <a href="{{url_for('register_new_user')}}">Register</a>
-            <a href="{{url_for('all_users')}}">All Users</a>
+            <a href="{{url_for('all_users', sort_order='asc', sort_column='id', q = q)}}">All Users</a>
+            <a href="{{url_for('goto_user')}}">Go To</a>
             
         </div>
         <div class="content">
