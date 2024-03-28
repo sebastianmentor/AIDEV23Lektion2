@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, flash
 from flask_migrate import Migrate, upgrade
-from models import db, User
+from models import db, User, seed_data
 from dotenv import load_dotenv
 import os
 
@@ -8,6 +8,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI_LOCAL")
+# app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///name.db"
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 db.init_app(app)
@@ -53,4 +54,5 @@ def user_page(user_id):
 if __name__ == "__main__":
     with app.app_context():
         upgrade()
+        seed_data()
     app.run(debug=True)
