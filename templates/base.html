@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>{%block title%}{%endblock%}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="content-wrap">
+        <div class="nav-bar">
+            <a href="/">Home</a>
+            <a href="{{url_for('register_new_user')}}">Register</a>
+            
+        </div>
+
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <footer class="site-footer">
+        <p>© 2024 Master Us3rs</p>
+    </footer>    
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends "base.html"%}
+{% block title %}
+Register new user
+{% endblock %}
+
+
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<div class="content"> 
+    <h2>Register new user</h2>
+    
+</div>
+{% endblock %} 
