@@ -1,6 +1,7 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from faker import Faker
+import random
 
 db = SQLAlchemy()
 
@@ -17,11 +18,11 @@ def seed_data():
     faker = Faker()
     while User.query.count() < 500:
         new_name = faker.name()
-        new_age = faker.age()
+        new_age = random.randint(20, 80)
         new_email = faker.email()
-        new_username = faker.username()
-        new_phone = faker.new_phone()
-
+        new_username = faker.user_name()
+        new_phone = str(random.randint(10000000,99999999))
+        
         new_user = User(name=new_name, age=new_age,email=new_email, username=new_username, phone=new_phone)
         db.session.add(new_user)
         db.session.commit()
