@@ -12,6 +12,8 @@ All users
    {% endif %}
 {% endwith %}
 <div class="container">
-    
+    {% for user in list_of_users %}
+      <h5>{{user.id}} {{user.email}}    {{user.age}}      {{user.name}}   {{user.username}}   {{user.phone}}</h5>
+    {% endfor %}
 </div>
 {% endblock %}

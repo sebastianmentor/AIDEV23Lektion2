@@ -20,11 +20,31 @@ def home_page():
 
 @app.route("/register", methods = ["GET", "POST"])
 def register_new_user():
-    ...
+    if request.method == "POST":
+        name = request.form.get('name')
+        age = request.form.get('age',type=int)
+        email = request.form.get('email')
+        username = request.form.get('username')
+        phone = request.form.get('phone')
+
+        email_exist = User.query.filter_by(email=email).first()
+        username_exist = User.query.filter_by(username=username).first()
+
+        if email_exist or username_exist:
+            flash('Username or email already exist!')
+        else:
+            new_user = User(name=name, age=age, email=email, username=username, phone=phone)
+            db.session.add(new_user)
+            db.session.commit()
+            flash('User created! Welcome!')
+    
+    return render_template('register_user.html')
+
 
 @app.route("/allusers")
 def all_users():
-    ...
+    users = User.query.all()
+    return render_template('users.html', list_of_users=users)
 
 @app.route("/user/<int:user_id>")
 def user_page(user_id):

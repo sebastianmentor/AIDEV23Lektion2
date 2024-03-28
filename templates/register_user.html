@@ -17,6 +17,23 @@ Register new user
 
 <div class="content"> 
     <h2>Register new user</h2>
-    
+    <form action="" method="POST" class="form-group" >
+      <label>Namn</label>
+      <input class="form-control" type="Text" id="name" name="name" required>
+
+      <label>Ålder</label>
+      <input class="form-control" type="number" min="0" max="120" id="age" name="age" required>
+
+      <label>Email</label>
+      <input class="form-control" type="email" id="email" name="email" required>
+
+      <label>Telefonnummer</label>
+      <input class="form-control" type="text" id="phone" name="phone" required>
+
+      <label for="username">Användarnamn</label>
+      <input class="form-control" type="text" id="username" name="username" required>
+
+      <input type="submit">
+    </form>
 </div>
 {% endblock %} 
